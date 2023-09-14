@@ -5,7 +5,7 @@ import ProfileCard from "./ProfileCard";
 
 const OngoingParkingCard = ({navigation}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("BookingScreen")}>
       <CarCard />
       <View style={styles.line}></View>
       <ProfileCard />

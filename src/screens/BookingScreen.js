@@ -6,6 +6,7 @@ import {
   Button,
   Touchable,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import React from "react";
 import CarCard from "../components/BookingScreen/CarCard";
@@ -74,6 +75,13 @@ const BookingScreen = ({ navigation }) => {
                 </Text>
               </View>
             </View>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.user_info}>
+          <Text style={styles.sub_header}>Enter Customer OTP</Text>
+          <View style={styles.otp_input_container}>
+              <TextInput style={styles.otp_input} />
+          </View>
           </View>
           <View style={styles.divider} />
           <TouchableOpacity style={styles.booking_button}>
@@ -159,6 +167,27 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
   },
+  otp_input_container:{
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    paddingBottom: 12,
+    borderRadius: 5,
+    shadowColor: "gray",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+
+    elevation: 18,
+  },
+  otp_input: {
+    borderBottomWidth: 1,
+    paddingTop: 0,
+    borderColor: "teal"
+  }
 });
 
 export default BookingScreen;

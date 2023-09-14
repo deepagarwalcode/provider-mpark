@@ -10,9 +10,9 @@ const NavFooter = ({navigation}) => {
         <Feather name="home" size={20} color="black" />
         <Text style={styles.nav_text}>Home</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.nav_item, {flex: 2}]} onPress={() => navigation.navigate("BookingsScreen")}>
+      <TouchableOpacity style={[styles.nav_item, {flex: 2}]} onPress={() => navigation.navigate("BookingHistoryScreen")}>
         <Feather name="calendar" size={20} color="black" />
-        <Text style={styles.nav_text}>Bookings</Text>
+        <Text style={styles.nav_text}>Booking History</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.nav_item} onPress={() => navigation.navigate("ProfileScreen")}>
         <Ionicons name="person-outline" size={20} color="black" />

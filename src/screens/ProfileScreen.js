@@ -4,6 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import NavFooter from "../components/General/NavFooter";
 import { TouchableOpacity } from "react-native";
+import ParkingCard from "../components/Profile/ParkingCard";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const ProfileScreen = ({ navigation }) => {
   return (
@@ -21,13 +23,13 @@ const ProfileScreen = ({ navigation }) => {
               <Ionicons name="help-buoy" size={24} color="black" />
               <Text>Help</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("BookingsScreen")}>
+            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("BookingHistoryScreen")}>
               <Feather name="calendar" size={24} color="black" />
               <Text>Bookings</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("Home")}>
-              <Ionicons name="bookmark-outline" size={24} color="black" />
-              <Text>Book Now</Text>
+              <MaterialIcons name="attach-money" size={24} color="black" />
+              <Text>Earnings</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.divider}></View>
@@ -47,7 +49,11 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.divider}></View>
-
+          <View style={styles.parkings}>
+            <Text style={styles.title}>Your Parkings</Text>
+            <ParkingCard navigation={navigation} />
+            <ParkingCard navigation={navigation} />
+          </View>
         </View>
       </ScrollView>
       <NavFooter navigation={navigation} />
@@ -124,9 +130,10 @@ const styles = StyleSheet.create({
   ic_head: {
     fontWeight: "600",
   },
-  vehicles: {
+  parkings: {
     width: "85%",
     alignItems: "flex-start",
+    gap: 10,
     // backgroundColor: "red",
   },
 });
