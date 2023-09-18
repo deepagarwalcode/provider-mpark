@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import api from "../../lib/api";
 
@@ -29,8 +29,9 @@ export const useAuth = () => {
 };
 
 export const AuthContext = ({ children }) => {
-  const [token, setToken] = (useState < string) | (null > null);
-  const [user, setUser] = (useState < IUser) | (null > null);
+  const [token, setToken] = useState(null);
+  // const [user, setUser] = (useState < IUser) | (null > null);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const signup = async (input) => {

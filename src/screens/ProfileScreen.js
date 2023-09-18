@@ -19,7 +19,7 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.options}>
-            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("Home")}>
+            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("SignupScreen")}>
               <Ionicons name="help-buoy" size={24} color="black" />
               <Text>Help</Text>
             </TouchableOpacity>
