@@ -10,6 +10,8 @@ import BookingHistoryScreen from "../screens/BookingHistoryScreen";
 import AddParkingScreen from "../screens/AddParkingScreen";
 import SignupScreen from "../screens/SignupScreen";
 import LoginScreen from "../screens/LoginScreen";
+import ProviderLocationScreen from "../screens/ProviderLocationScreen";
+import DestinationSearch from "../screens/DestinationSearchScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,9 +29,23 @@ export default function HomeNavigator() {
 
         <Stack.Screen name="BookingScreen" component={BookingScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Stack.Screen name="ParkingSpaceScreen" component={ParkingSpaceScreen} />
+        <Stack.Screen
+          name="ParkingSpaceScreen"
+          component={ParkingSpaceScreen}
+        />
         <Stack.Screen name="AddParkingScreen" component={AddParkingScreen} />
-        <Stack.Screen name="BookingHistoryScreen" component={BookingHistoryScreen} />
+        <Stack.Screen
+          name="BookingHistoryScreen"
+          component={BookingHistoryScreen}
+        />
+        <Stack.Screen
+          name="ProviderLocationScreen"
+          component={ProviderLocationScreen}
+        />
+        <Stack.Screen
+          name="DestinationSearchScreen"
+          component={DestinationSearch}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

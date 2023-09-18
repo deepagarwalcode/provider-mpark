@@ -6,10 +6,15 @@ import {
   TextInput,
   Touchable,
   TouchableOpacity,
+  Button,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import ProviderLocationScreen from "./ProviderLocationScreen";
 
 const AddParkingScreen = ({ navigation }) => {
+
+  const [map, setMap] = useState(false)
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -17,16 +22,30 @@ const AddParkingScreen = ({ navigation }) => {
         <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
-          <Text style={styles.input_head}>Name (Complex/Building/Area)</Text>
+          <Text style={styles.input_head}>Full Address</Text>
           <TextInput style={styles.input} placeholder="Enter Name" />
         </View>
         <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
           <Text style={styles.input_head}>
-            Location (Nearest on Google Maps)
+            Coordinates (Open physically in parking space)
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity onPress={() => navigation.navigate("ProviderLocationScreen")}>
+            <Text style={[styles.input, { paddingTop: 7 }]}>
+              Detect Coordinates
+            </Text>
+            {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
+            {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
+          </TouchableOpacity>
+        </View>
+        <View style={styles.divider}>
+
+        </View>
+
+        <View style={styles.input_container}>
+          <Text style={styles.input_head}>Location (Nearest on google maps)</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("DestinationSearchScreen")}>
             <Text style={[styles.input, { paddingTop: 7 }]}>
               Search Location
             </Text>
@@ -34,12 +53,7 @@ const AddParkingScreen = ({ navigation }) => {
             {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
           </TouchableOpacity>
         </View>
-        <View style={styles.divider}></View>
-
-        <View style={styles.input_container}>
-          <Text style={styles.input_head}>Name (Complex/Building/Area)</Text>
-          <TextInput style={styles.input} placeholder="Enter Name" />
-        </View>
+        <Button title="Add Parking" />
       </View>
     </ScrollView>
   );
