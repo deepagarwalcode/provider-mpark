@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { BASE_URL } from "../../config";
+import { Auth } from "./auth";
 
 class Api {
   _axios;
@@ -11,6 +12,7 @@ class Api {
 
   constructor() {
     this._axios = this.createAxios();
+    this.auth = new Auth(this._axios);
   }
   createAxios() {
     const ax = axios.create();
