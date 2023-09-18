@@ -22,7 +22,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD0e8DR3xuSiyAsjYcYTLIJahx-uEp13cU"
+        }
+      },
+      "package": "com.deepcodes.mparkprovider"
     },
     "web": {
       "favicon": "./assets/favicon.png"
