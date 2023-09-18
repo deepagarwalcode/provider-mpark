@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Button } from "react-native";
 import React, { useState } from "react";
 import { Image } from "expo-image";
 import { FontAwesome } from "@expo/vector-icons";
@@ -65,6 +65,10 @@ const ParkingSpaceScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.previous_parkings}>
+      <Text style={styles.ps_titles}>Assign Security</Text>
+          <Button style={styles.button} title="+ Add Security" />
+      </View>
+      <View style={styles.previous_parkings}>
       <Text style={styles.ps_titles}>Previous Parkings</Text>
           <OngoingParkingCard navigation={navigation} />
           <OngoingParkingCard navigation={navigation} />
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderBottomWidth: 5,
   },
-  ps_titles: { fontWeight: "700", fontSize: 15 },
+  ps_titles: { fontWeight: "700", fontSize: 15, marginBottom: 10 },
   parking_info: {
     width: "80%",
   },
@@ -97,6 +101,13 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10
   },
+  button: {
+    backgroundColor: "white",
+    color: "black",
+    borderWidth: 1,
+    borderColor: "teal",
+    borderRadius: 5
+  }
 });
 
 export default ParkingSpaceScreen;

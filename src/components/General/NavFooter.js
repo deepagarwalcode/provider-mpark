@@ -14,7 +14,8 @@ const NavFooter = ({navigation}) => {
         <Feather name="calendar" size={20} color="black" />
         <Text style={styles.nav_text}>Booking History</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.nav_item} onPress={() => navigation.navigate("ProfileScreen")}>
+      <TouchableOpacity style={styles.nav_item} onPress={() => navigation.navigate("SignupScreen")}>
+      {/* <TouchableOpacity style={styles.nav_item} onPress={() => navigation.navigate("ProfileScreen")}> */}
         <Ionicons name="person-outline" size={20} color="black" />
         <Text style={styles.nav_text}>Profile</Text>
       </TouchableOpacity>

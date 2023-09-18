@@ -53,6 +53,9 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.title}>Your Parkings</Text>
             <ParkingCard navigation={navigation} />
             <ParkingCard navigation={navigation} />
+            <TouchableOpacity style={styles.add_parking} onPress={() => navigation.navigate("AddParkingScreen")}>
+              <Text style={{fontWeight: "600"}}>+ Add Parking</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -136,6 +139,15 @@ const styles = StyleSheet.create({
     gap: 10,
     // backgroundColor: "red",
   },
+  add_parking: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "lightgray",
+  }
 });
 
 export default ProfileScreen;
