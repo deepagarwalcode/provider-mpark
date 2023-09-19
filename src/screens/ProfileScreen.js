@@ -5,29 +5,40 @@ import { Feather } from "@expo/vector-icons";
 import NavFooter from "../components/General/NavFooter";
 import { TouchableOpacity } from "react-native";
 import ParkingCard from "../components/Profile/ParkingCard";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { useAuth } from "../contexts/auth";
 
 const ProfileScreen = ({ navigation }) => {
+  const auth = useAuth();
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.name}>Deep Agarwal</Text>
+            <Text style={styles.name}>{auth.user?.name}</Text>
             <View style={styles.icon}>
               <Ionicons name="person" size={24} color="black" />
             </View>
           </View>
           <View style={styles.options}>
-            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("SignupScreen")}>
+            <TouchableOpacity
+              style={styles.option}
+              onPress={() => navigation.navigate("SignupScreen")}
+            >
               <Ionicons name="help-buoy" size={24} color="black" />
               <Text>Help</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("BookingHistoryScreen")}>
+            <TouchableOpacity
+              style={styles.option}
+              onPress={() => navigation.navigate("BookingHistoryScreen")}
+            >
               <Feather name="calendar" size={24} color="black" />
               <Text>Bookings</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={()=> navigation.navigate("Home")}>
+            <TouchableOpacity
+              style={styles.option}
+              onPress={() => navigation.navigate("Home")}
+            >
               <MaterialIcons name="attach-money" size={24} color="black" />
               <Text>Earnings</Text>
             </TouchableOpacity>
@@ -37,15 +48,15 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.title}>Account Info</Text>
             <View style={styles.info_container}>
               <Text style={styles.ic_head}>Name</Text>
-              <Text>Deep Agarwal</Text>
+              <Text>{auth.user?.name}</Text>
             </View>
             <View style={styles.info_container}>
               <Text style={styles.ic_head}>Phone</Text>
-              <Text>+91 8902021321</Text>
+              <Text>{auth.user?.phoneNo}</Text>
             </View>
             <View style={[styles.info_container, { borderBottomWidth: 0 }]}>
               <Text style={styles.ic_head}>Email</Text>
-              <Text>deep72003@gmail.com</Text>
+              <Text>-</Text>
             </View>
           </View>
           <View style={styles.divider}></View>
@@ -53,8 +64,11 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.title}>Your Parkings</Text>
             <ParkingCard navigation={navigation} />
             <ParkingCard navigation={navigation} />
-            <TouchableOpacity style={styles.add_parking} onPress={() => navigation.navigate("AddParkingScreen")}>
-              <Text style={{fontWeight: "600"}}>+ Add Parking</Text>
+            <TouchableOpacity
+              style={styles.add_parking}
+              onPress={() => navigation.navigate("AddParkingScreen")}
+            >
+              <Text style={{ fontWeight: "600" }}>+ Add Parking</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -147,7 +161,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: "lightgray",
-  }
+  },
 });
 
 export default ProfileScreen;

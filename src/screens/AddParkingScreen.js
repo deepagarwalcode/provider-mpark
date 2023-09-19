@@ -28,10 +28,18 @@ const AddParkingScreen = ({ navigation }) => {
         <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
+          <Text style={styles.input_head}>Hourly Rate</Text>
+          <TextInput style={styles.input} placeholder="Enter Hourly Rate" />
+        </View>
+        <View style={styles.divider}></View>
+
+        <View style={styles.input_container}>
           <Text style={styles.input_head}>
             Coordinates (Open physically in parking space)
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("ProviderLocationScreen")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ProviderLocationScreen")}
+          >
             <Text style={[styles.input, { paddingTop: 7 }]}>
               Detect Coordinates
             </Text>
@@ -39,13 +47,15 @@ const AddParkingScreen = ({ navigation }) => {
             {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
           </TouchableOpacity>
         </View>
-        <View style={styles.divider}>
-
-        </View>
+        <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
-          <Text style={styles.input_head}>Location (Nearest on google maps)</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("DestinationSearchScreen")}>
+          <Text style={styles.input_head}>
+            Location (Nearest on google maps)
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("DestinationSearchScreen")}
+          >
             <Text style={[styles.input, { paddingTop: 7 }]}>
               Search Location
             </Text>
