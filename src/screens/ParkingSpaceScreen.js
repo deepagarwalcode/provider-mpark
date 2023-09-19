@@ -5,20 +5,80 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import OngoingParkingCard from "../components/Home/OngoingParkingCard";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+
 import { useRoute } from "@react-navigation/native";
 import api from "../lib/api";
 
-const ParkingSpaceScreen = ({navigation}) => {
-  const route = useRoute()
-  const [parking,setParking] = useState(null)
-  const fetchParking =async () => {
-    const parking =await api.parking.getParkingById(route.params.id)
-    setParking(parking)
-  }
+const ParkingSpaceScreen = ({ navigation }) => {
+  const route = useRoute();
+  const [parking, setParking] = useState(null);
+  const fetchParking = async () => {
+    const parking = await api.parking.getParkingById(route.params.id);
+    setParking(parking);
+  };
 
   useEffect(() => {
-    fetchParking()
-  },[])
+    fetchParking();
+  }, []);
+
+  const [date] = useState(new Date()); // Using current date
+  const [formattedDate, setFormattedDate] = useState("");
+
+  useEffect(() => {
+    // Format the date as "Month Date" initially
+    const options = { month: "long", day: "numeric" };
+    const initialFormattedDate = date.toLocaleDateString(undefined, options);
+    setFormattedDate(initialFormattedDate);
+  }, [date]);
+
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+
+  const showStartMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange: (event) => {
+        console.log(event.nativeEvent.timestamp);
+        setStartTime(event.nativeEvent.timestamp);
+      },
+      mode: currentMode,
+      minHour: 8,
+      maxHour: 20,
+      minuteInterval: 30,
+    });
+  };
+
+  const showStartTimepicker = () => {
+    showStartMode("time");
+  };
+
+  const showEndMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange: (event) => {
+        console.log(event.nativeEvent.timestamp);
+        setEndTime(event.nativeEvent.timestamp);
+      },
+      mode: currentMode,
+      minHour: 8,
+      maxHour: 20,
+      minuteInterval: 30,
+    });
+  };
+
+  const showEndTimepicker = () => {
+    showEndMode("time");
+  };
+
+  const extractTimeString = (timestamp) => {
+    if (timestamp == null) return null;
+    const date = new Date(timestamp);
+    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+    const formattedTime = date.toLocaleTimeString([], options);
+    return formattedTime;
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}>
@@ -76,14 +136,44 @@ const ParkingSpaceScreen = ({navigation}) => {
           <FontAwesome name="location-arrow" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={styles.previous_parkings}>
-      <Text style={styles.ps_titles}>Assign Security</Text>
-          <Button style={styles.button} title="+ Add Security" />
+      <View style={styles.time_selector}>
+        <Text style={styles.ps_titles}>Parking space availability:</Text>
+        <View style={styles.time_inputs}>
+          <TouchableOpacity
+            style={styles.time_input}
+            onPress={() => {
+              showStartTimepicker();
+              // showDatepicker();
+            }}
+          >
+            <Text style={styles.ti_head}>From</Text>
+            <Text style={styles.ti_time}>
+              {extractTimeString(startTime) || "Select Start Time"}
+            </Text>
+            <Text style={styles.ti_date}>{formattedDate || "Tue, Sep 4"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.time_input}
+            onPress={showEndTimepicker}
+          >
+            <Text style={styles.ti_head}>To</Text>
+            <Text style={styles.ti_time}>
+              {extractTimeString(endTime) || "Select End Time"}
+            </Text>
+            {/* <Text style={styles.ti_date}>Tue, Sep 4</Text> */}
+            <Text style={styles.ti_date}>{formattedDate || "Tue, Sep 4"}</Text>
+          </TouchableOpacity>
+          <FontAwesome5 name="arrow-alt-circle-right" size={24} color="black" />
+        </View>
       </View>
       <View style={styles.previous_parkings}>
-      <Text style={styles.ps_titles}>Previous Parkings</Text>
-          <OngoingParkingCard navigation={navigation} />
-          <OngoingParkingCard navigation={navigation} />
+        <Text style={styles.ps_titles}>Assign Security</Text>
+        <Button style={styles.button} title="+ Add Security" />
+      </View>
+      <View style={styles.previous_parkings}>
+        <Text style={styles.ps_titles}>Previous Parkings</Text>
+        <OngoingParkingCard navigation={navigation} />
+        <OngoingParkingCard navigation={navigation} />
       </View>
     </View>
   );
@@ -111,15 +201,46 @@ const styles = StyleSheet.create({
   previous_parkings: {
     width: "100%",
     padding: 15,
-    gap: 10
+    gap: 10,
   },
   button: {
     backgroundColor: "white",
     color: "black",
     borderWidth: 1,
     borderColor: "teal",
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
+  time_selector: {
+    width: "100%",
+    padding: 15,
+    justifyContent: "space-between",
+    overflow: "scroll",
+    borderColor: "lightgray",
+    borderBottomWidth: 5,
+  },
+  time_inputs: {
+    flexDirection: "row",
+    marginTop: 10,
+    justifyContent: "space-between",
+    padding: 10,
+    paddingHorizontal: 15,
+    borderColor: "teal",
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  ti_head: {
+    fontWeight: "600",
+    color: "teal",
+    marginBottom: 5,
+    textTransform: "uppercase",
+  },
+  ti_time: {
+    fontWeight: "600",
+  },
+  ti_date: {
+    color: "gray",
+  },
 });
 
 export default ParkingSpaceScreen;
