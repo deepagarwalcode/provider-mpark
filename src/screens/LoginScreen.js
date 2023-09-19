@@ -24,6 +24,7 @@ const LoginScreen = ({ navigation }) => {
       console.log(error);
     }
   };
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login to Mpark</Text>

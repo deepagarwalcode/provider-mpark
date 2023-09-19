@@ -78,6 +78,7 @@ const ProfileScreen = ({ navigation }) => {
               return (
                 <ParkingCard
                   key={parking._id}
+                  id={parking._id}
                   navigation={navigation}
                   address={parking.address}
                   hourlyRate={parking.hourlyRate}

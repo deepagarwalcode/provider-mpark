@@ -4,11 +4,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 
-const ParkingCard = ({ navigation, name, hourlyRate, address }) => {
+const ParkingCard = ({ id, navigation, name, hourlyRate, address }) => {
   return (
     <TouchableOpacity
       style={styles.parking_card}
-      onPress={() => navigation.navigate("ParkingSpaceScreen")}
+      onPress={() => navigation.navigate("ParkingSpaceScreen", { id: id })}
     >
       <View style={styles.pc_top}>
         <Image

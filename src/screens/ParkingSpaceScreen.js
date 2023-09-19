@@ -5,8 +5,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import OngoingParkingCard from "../components/Home/OngoingParkingCard";
+import { useRoute } from "@react-navigation/native";
 
 const ParkingSpaceScreen = ({navigation}) => {
+  const route = useRoute()
+  console.log(route.params.id)
   return (
     <View style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}>
       <Image
