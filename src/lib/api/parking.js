@@ -6,12 +6,12 @@ export class Parking {
   }
 
   async createParking(input) {
-    const { data } = this.axios.post("/parking", input);
+    const { data } =await this.axios.post("/parking", input);
     return data;
   }
 
   async getMyParkings() {
-    const { data } = this.axios.get("/parking");
+    const { data } = await this.axios.get("/parking");
     return data;
   }
 }

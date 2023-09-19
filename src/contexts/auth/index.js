@@ -50,9 +50,7 @@ export const AuthContext = ({ children }) => {
   const fetchUser = async () => {
     setIsLoading(true);
     try {
-      console.log("w1");
       let tok = token ?? (await getUserFromStorage());
-      console.log(tok, "wokring");
       const user = await api.user.getMe();
       await setUserInStorage(tok);
       setUser(user);
@@ -65,7 +63,6 @@ export const AuthContext = ({ children }) => {
     }
   };
   const handleUserDetails = async () => {
-    console.log(token, "token");
     let t = token;
     if (!t) {
       t = await getUserFromStorage();

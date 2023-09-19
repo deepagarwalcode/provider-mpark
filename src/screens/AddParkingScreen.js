@@ -10,10 +10,29 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import ProviderLocationScreen from "./ProviderLocationScreen";
+import api from "../lib/api";
 
 const AddParkingScreen = ({ navigation }) => {
+  const [address, setAddress] = useState("");
+  const [hourlyRate, setHourlyRate] = useState("0");
+  const [coordinates, setCoordinates] = useState({});
+  const [location, setLocation] = useState({});
 
-  const [map, setMap] = useState(false)
+  const createParking = async () => {
+    const data = {
+      address,
+      hourlyRate: Number(hourlyRate),
+      coordinates: {
+        x: 34,
+        y: 43,
+      },
+      landmark: {},
+    };
+    const res = await api.parking.createParking(data);
+    console.log(res)
+  };
+
+  // const [map, setMap] = useState(false);
 
   return (
     <ScrollView>
@@ -23,13 +42,28 @@ const AddParkingScreen = ({ navigation }) => {
 
         <View style={styles.input_container}>
           <Text style={styles.input_head}>Full Address</Text>
-          <TextInput style={styles.input} placeholder="Enter Name" />
+          <TextInput
+            value={address}
+            onChangeText={(txt) => {
+              setAddress(txt);
+            }}
+            style={styles.input}
+            placeholder="Enter Name"
+          />
         </View>
         <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
           <Text style={styles.input_head}>Hourly Rate</Text>
-          <TextInput style={styles.input} placeholder="Enter Hourly Rate" />
+          <TextInput
+            value={hourlyRate}
+            style={styles.input}
+            placeholder="Enter Hourly Rate"
+            keyboardType="numeric"
+            onChangeText={(txt) => {
+              setHourlyRate(txt);
+            }}
+          />
         </View>
         <View style={styles.divider}></View>
 
@@ -63,7 +97,7 @@ const AddParkingScreen = ({ navigation }) => {
             {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
           </TouchableOpacity>
         </View>
-        <Button title="Add Parking" />
+        <Button onPress={createParking} title="Add Parking" />
       </View>
     </ScrollView>
   );
