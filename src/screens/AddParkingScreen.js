@@ -13,6 +13,7 @@ import ProviderLocationScreen from "./ProviderLocationScreen";
 import api from "../lib/api";
 
 const AddParkingScreen = ({ navigation }) => {
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [hourlyRate, setHourlyRate] = useState("0");
   const [coordinates, setCoordinates] = useState({});
@@ -20,6 +21,7 @@ const AddParkingScreen = ({ navigation }) => {
 
   const createParking = async () => {
     const data = {
+      name,
       address,
       hourlyRate: Number(hourlyRate),
       coordinates: {
@@ -29,7 +31,7 @@ const AddParkingScreen = ({ navigation }) => {
       landmark: {},
     };
     const res = await api.parking.createParking(data);
-    console.log(res)
+    console.log(res);
   };
 
   // const [map, setMap] = useState(false);
@@ -41,6 +43,19 @@ const AddParkingScreen = ({ navigation }) => {
         <View style={styles.divider}></View>
 
         <View style={styles.input_container}>
+          <Text style={styles.input_head}>Name</Text>
+          <TextInput
+            value={name}
+            onChangeText={(txt) => {
+              setName(txt);
+            }}
+            style={styles.input}
+            placeholder="Enter Name"
+          />
+        </View>
+        <View style={styles.divider}></View>
+
+        <View style={styles.input_container}>
           <Text style={styles.input_head}>Full Address</Text>
           <TextInput
             value={address}
@@ -48,7 +63,7 @@ const AddParkingScreen = ({ navigation }) => {
               setAddress(txt);
             }}
             style={styles.input}
-            placeholder="Enter Name"
+            placeholder="Enter Address"
           />
         </View>
         <View style={styles.divider}></View>
