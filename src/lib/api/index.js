@@ -2,6 +2,9 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { BASE_URL } from "../../config";
 import { Auth } from "./auth";
+import { Booking } from "./booking";
+import { Parking } from "./parking";
+import { User } from "./user";
 
 class Api {
   _axios;
@@ -13,6 +16,9 @@ class Api {
   constructor() {
     this._axios = this.createAxios();
     this.auth = new Auth(this._axios);
+    this.parking = new Parking(this._axios);
+    this.booking = new Booking(this._axios);
+    this.user = new User(this._axios);
   }
   createAxios() {
     const ax = axios.create();

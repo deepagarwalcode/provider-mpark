@@ -1,4 +1,4 @@
-class Booking {
+export class Booking {
   axios;
 
   constructor(axios) {

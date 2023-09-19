@@ -1,4 +1,4 @@
-class User {
+export class User {
   axios;
 
   constructor(axios) {

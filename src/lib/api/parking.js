@@ -1,4 +1,4 @@
-class Parking {
+export class Parking {
   axios;
 
   constructor(axios) {
