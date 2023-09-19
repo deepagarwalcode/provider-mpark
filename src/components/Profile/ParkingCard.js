@@ -4,9 +4,12 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 
-const ParkingCard = ({navigation}) => {
+const ParkingCard = ({ navigation, name, hourlyRate, address }) => {
   return (
-    <TouchableOpacity style={styles.parking_card} onPress={() => navigation.navigate("ParkingSpaceScreen")}>
+    <TouchableOpacity
+      style={styles.parking_card}
+      onPress={() => navigation.navigate("ParkingSpaceScreen")}
+    >
       <View style={styles.pc_top}>
         <Image
           source={
@@ -28,31 +31,31 @@ const ParkingCard = ({navigation}) => {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            First Line of Address upto Specific no of characters Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam, est?
+            {address}
           </Text>
           <View
             style={{
               flexDirection: "row",
               maxWidth: "89%",
               justifyContent: "space-between",
-              marginTop: "auto"
+              marginTop: "auto",
             }}
           >
             <View style={styles.semi_details}>
               <FontAwesome name="location-arrow" size={16} color="black" />
-              <Text style={{color: "gray", fontSize: 14, fontWeight: "500"}}>1.14 km</Text>
+              <Text style={{ color: "gray", fontSize: 14, fontWeight: "500" }}>
+                1.14 km
+              </Text>
             </View>
             <View style={styles.semi_details}>
               <Ionicons name="pricetag" size={16} color="black" />
-              <Text style={{color: "gray", fontSize: 14, fontWeight: "500"}}>₹30/hr</Text>
+              <Text style={{ color: "gray", fontSize: 14, fontWeight: "500" }}>
+                ₹{hourlyRate}/hr
+              </Text>
             </View>
           </View>
         </View>
       </View>
-      {/* <View style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center"}}>
-        <Text style={{fontSize: 15, fontWeight: 600}}>₹30/hr</Text>
-        <Text style={{backgroundColor: "teal", fontSize: 15,  color: "white", paddingVertical: 5, paddingHorizontal: 10}}>Book Now</Text>
-      </View> */}
     </TouchableOpacity>
   );
 };
@@ -81,8 +84,8 @@ const styles = StyleSheet.create({
   },
   semi_details: {
     flexDirection: "row",
-    alignItems: "center",   
-    gap: 5,    
+    alignItems: "center",
+    gap: 5,
   },
 });
 

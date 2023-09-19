@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import NavFooter from "../components/General/NavFooter";
@@ -7,9 +7,21 @@ import { TouchableOpacity } from "react-native";
 import ParkingCard from "../components/Profile/ParkingCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/auth";
+import api from "../lib/api";
 
 const ProfileScreen = ({ navigation }) => {
   const auth = useAuth();
+  const [parkings, setParkings] = useState([]);
+
+  const fetchParkings = async () => {
+    const data = await api.parking.getMyParkings();
+    setParkings(data);
+  };
+
+  useEffect(() => {
+    fetchParkings();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -62,8 +74,17 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.divider}></View>
           <View style={styles.parkings}>
             <Text style={styles.title}>Your Parkings</Text>
-            <ParkingCard navigation={navigation} />
-            <ParkingCard navigation={navigation} />
+            {parkings.map((parking) => {
+              return (
+                <ParkingCard
+                  key={parking._id}
+                  navigation={navigation}
+                  address={parking.address}
+                  hourlyRate={parking.hourlyRate}
+                />
+              );
+            })}
+
             <TouchableOpacity
               style={styles.add_parking}
               onPress={() => navigation.navigate("AddParkingScreen")}
