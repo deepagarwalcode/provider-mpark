@@ -1,15 +1,25 @@
 import { View, Text, TouchableOpacity, Button } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import OngoingParkingCard from "../components/Home/OngoingParkingCard";
 import { useRoute } from "@react-navigation/native";
+import api from "../lib/api";
 
 const ParkingSpaceScreen = ({navigation}) => {
   const route = useRoute()
-  console.log(route.params.id)
+  const [parking,setParking] = useState(null)
+  const fetchParking =async () => {
+    const parking =await api.parking.getParkingById(route.params.id)
+    setParking(parking)
+  }
+
+  useEffect(() => {
+    fetchParking()
+  },[])
+
   return (
     <View style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}>
       <Image
@@ -20,7 +30,7 @@ const ParkingSpaceScreen = ({navigation}) => {
       />
       <View style={styles.parking_info_container}>
         <View style={styles.parking_info}>
-          <Text style={styles.ps_titles}>Name of the Parking</Text>
+          <Text style={styles.ps_titles}>{parking?.name}</Text>
           <Text
             style={{
               color: "gray",
@@ -28,8 +38,7 @@ const ParkingSpaceScreen = ({navigation}) => {
               marginTop: 5,
             }}
           >
-            First Line of Address upto Specific no of characters Lorem ipsum,
-            dolor sit amet consectetur adipisicing elit. Quisquam, est?
+            {parking?.address}
           </Text>
           <View
             style={{
@@ -48,7 +57,7 @@ const ParkingSpaceScreen = ({navigation}) => {
             <View style={styles.semi_details}>
               <Ionicons name="pricetag" size={16} color="black" />
               <Text style={{ color: "gray", fontSize: 14, fontWeight: "500" }}>
-                ₹30/hr
+                ₹{parking?.hourlyRate}/hr
               </Text>
             </View>
           </View>
