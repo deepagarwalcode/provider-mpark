@@ -18,9 +18,7 @@ const ParkingCard = ({ navigation, name, hourlyRate, address }) => {
           style={{ width: 70, height: 90, objectFit: "cover", borderRadius: 5 }}
         />
         <View style={styles.pc_info}>
-          <Text style={{ fontWeight: "600", fontSize: 15 }}>
-            Name of the Parking
-          </Text>
+          <Text style={{ fontWeight: "600", fontSize: 15 }}>{name}</Text>
           <Text
             style={{
               fontWeight: "400",

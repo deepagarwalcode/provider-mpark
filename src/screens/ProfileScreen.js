@@ -74,13 +74,14 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.divider}></View>
           <View style={styles.parkings}>
             <Text style={styles.title}>Your Parkings</Text>
-            {parkings.map((parking) => {
+            {parkings.reverse().map((parking) => {
               return (
                 <ParkingCard
                   key={parking._id}
                   navigation={navigation}
                   address={parking.address}
                   hourlyRate={parking.hourlyRate}
+                  name={parking.name}
                 />
               );
             })}
