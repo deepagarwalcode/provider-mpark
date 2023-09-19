@@ -26,7 +26,7 @@ class Api {
     ax.interceptors.request.use(async (config) => {
       //setting authorization headers for server side api calls
 
-      config.headers[header] = await SecureStore.getItemAsync("token");
+      config.headers["authorization"] = await SecureStore.getItemAsync("token");
       config.baseURL = BASE_URL;
 
       return config;

@@ -6,11 +6,24 @@ import {
   Touchable,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import { useAuth } from "../contexts/auth";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
+  const auth = useAuth();
+
+  console.log(auth.isLoading, auth.user)
+  const [phoneNo, setPhoneNo] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      await auth.login({ phoneNo });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login to Mpark</Text>
@@ -26,7 +39,7 @@ const LoginScreen = ({navigation}) => {
             color="black"
           />
         </View> */}
-        <TextInput placeholder="Enter Mobile No." />
+        <TextInput onChangeText={(text) => setPhoneNo(text)} placeholder="Enter Mobile No." />
       </View>
       <Text style={styles.label}>OTP</Text>
 
@@ -36,7 +49,7 @@ const LoginScreen = ({navigation}) => {
         </View> */}
         <TextInput placeholder="Enter OTP" />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text
           style={{ color: "white", fontWeight: "600", textAlign: "center" }}
         >

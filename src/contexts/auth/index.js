@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import api from "../../lib/api";
 
@@ -50,7 +50,9 @@ export const AuthContext = ({ children }) => {
   const fetchUser = async () => {
     setIsLoading(true);
     try {
+      console.log("w1");
       let tok = token ?? (await getUserFromStorage());
+      console.log(tok, "wokring");
       const user = await api.user.getMe();
       await setUserInStorage(tok);
       setUser(user);
@@ -63,15 +65,19 @@ export const AuthContext = ({ children }) => {
     }
   };
   const handleUserDetails = async () => {
-    if (!token) {
-      let t = await getUserFromStorage();
+    console.log(token, "token");
+    let t = token;
+    if (!t) {
+      t = await getUserFromStorage();
       if (!t) {
         setUser(null);
         setIsLoading(false);
         return;
       }
-      setToken(t.token);
+
+      setToken(t);
     }
+    await setUserInStorage(t);
     fetchUser();
   };
   useEffect(() => {

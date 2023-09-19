@@ -6,11 +6,27 @@ import {
   Touchable,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import { useAuth } from "../contexts/auth";
+import axios from "axios";
+import { LinkingContext } from "@react-navigation/native";
 
 const SignupScreen = ({ navigation }) => {
+  const auth = useAuth();
+
+  const [name, setName] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      await auth.signup({name, phoneNo});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Signup to Mpark</Text>
@@ -20,7 +36,10 @@ const SignupScreen = ({ navigation }) => {
         {/* <View style={styles.icon}>
           <Ionicons name="person-outline" size={24} color="black" />
         </View> */}
-        <TextInput placeholder="Enter Name" />
+        <TextInput
+          placeholder="Enter Name"
+          onChangeText={(text) => setName(text)}
+        />
       </View>
       <Text style={styles.label}>Mobile</Text>
 
@@ -33,7 +52,10 @@ const SignupScreen = ({ navigation }) => {
             color="black"
           />
         </View> */}
-        <TextInput placeholder="Enter Mobile No." />
+        <TextInput
+          placeholder="Enter Mobile No."
+          onChangeText={(text) => setPhoneNo(text)}
+        />
       </View>
       <Text style={styles.label}>OTP</Text>
 
@@ -43,7 +65,7 @@ const SignupScreen = ({ navigation }) => {
         </View> */}
         <TextInput placeholder="Enter OTP" />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text
           style={{ color: "white", fontWeight: "600", textAlign: "center" }}
         >
