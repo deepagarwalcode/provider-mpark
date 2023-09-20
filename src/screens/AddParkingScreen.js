@@ -25,8 +25,8 @@ const AddParkingScreen = ({ navigation }) => {
       address,
       hourlyRate: Number(hourlyRate),
       coordinates: {
-        x: 34,
-        y: 43,
+        x: 22.634150116492687, 
+        y: 88.45728827058315
       },
       landmark: {},
     };
