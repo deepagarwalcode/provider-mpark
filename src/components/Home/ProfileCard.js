@@ -1,9 +1,17 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
 import { Zocial } from "@expo/vector-icons";
+import api from "../../lib/api";
 
 const ProfileCard = ({ userDetails }) => {
+  const [user,setUser] = useState(null)
+  const fetchUser = async(id) => {
+    const data = await api.user.getUserById(id)
+  }
+  useEffect(() => {
+    // fetchUser(id)
+  },[])
   return (
     <View style={styles.container}>
     <View style={{width: 80, height: 50, alignItems: "center", justifyContent: "center"}}>

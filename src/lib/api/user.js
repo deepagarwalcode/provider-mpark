@@ -9,4 +9,9 @@ export class User {
     const { data } = await this.axios.get("/user/me");
     return data;
   }
+
+  async getUserById(id){
+    const {data} = await this.axios.get(`/user/${id}`)
+    return data
+  }
 }
