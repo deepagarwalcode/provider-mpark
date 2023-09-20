@@ -3,11 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import HomeNavigator from "./src/navigation/Home";
 import HomeScreen from "./src/screens/HomeScreen";
 import { AuthContext } from "./src/contexts/auth";
+import { ParkingContext } from "./src/contexts/auth/Parking";
 
 export default function App() {
   return (
     <AuthContext>
-      <HomeNavigator />
+      <ParkingContext>
+        <HomeNavigator />
+      </ParkingContext>
     </AuthContext>
   );
 }

@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import ProviderLocationScreen from "./ProviderLocationScreen";
 import api from "../lib/api";
+import { useParking } from "../contexts/auth/Parking";
 
 const AddParkingScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -19,17 +20,17 @@ const AddParkingScreen = ({ navigation }) => {
   const [coordinates, setCoordinates] = useState({});
   const [location, setLocation] = useState({});
 
+  const parking = useParking()
+
   const createParking = async () => {
     const data = {
       name,
       address,
       hourlyRate: Number(hourlyRate),
-      coordinates: {
-        x: 34,
-        y: 43,
-      },
-      landmark: {},
+      coordinates: parking.coordinates,
+      landmark: parking.location,
     };
+    console.log(data)
     const res = await api.parking.createParking(data);
     console.log(res);
   };
