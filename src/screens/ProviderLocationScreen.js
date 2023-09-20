@@ -3,10 +3,15 @@ import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps";
 
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
+import { useRoute } from "@react-navigation/native";
+import { useParking } from "../contexts/auth/Parking";
 
 const ProviderLocationScreen = ({ navigation }) => {
+  const route = useRoute()
   const [currentLocation, setCurrentLocation] = useState(null);
+  const parking = useParking()
   const [errorMsg, setErrorMsg] = useState(null);
+
 
   useEffect(() => {
     (async () => {
@@ -15,19 +20,20 @@ const ProviderLocationScreen = ({ navigation }) => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setCurrentLocation(location);
-      console.log(currentLocation);
-      console.log(location);
     })();
   }, []);
 
-  //   useEffect(() => {
-  //     if (location) {
-  //       console.log(location?.details);
-  //     }
-  //   }, [location]);
+    useEffect(() => {
+      if (currentLocation) {
+        const coords = (currentLocation?.coords);
+        parking.setCoordinates({
+          x: coords.longitude,
+          y: coords.latitude
+        })
+      }
+    }, [currentLocation]);
 
   const circleCenter = { latitude: 22.5809743, longitude: 88.41236465 };
   const origin = { latitude: 22.634606146549462, longitude: 88.4587195538794 };

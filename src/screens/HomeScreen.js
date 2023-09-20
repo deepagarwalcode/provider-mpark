@@ -1,10 +1,28 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import OngoingParkingCard from "../components/Home/OngoingParkingCard";
 import NavFooter from "../components/General/NavFooter";
+import api from "../lib/api";
 
 const HomeScreen = ({ navigation }) => {
+  const [parkings, setParkings] = useState([]);
+  const [bookings, setBookings] = useState([]);
+
+  console.log(parkings, bookings);
+
+  const fetchParkings = async () => {
+    const data = await api.parking.getMyParkings();
+    setParkings(data);
+    const books = await Promise.all(
+      data.map((parking) => api.booking.getBookingsByParking(parking._id))
+    );
+    setBookings(books);
+  };
+
+  useEffect(() => {
+    fetchParkings();
+  }, []);
   return (
     <View>
       <ScrollView style={{ height: "100%", backgroundColor: "white" }}>

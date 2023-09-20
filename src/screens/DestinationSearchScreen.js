@@ -6,15 +6,17 @@ import PlaceRow from "../components/DestinationSearch/PlaceRow";
 import * as Location from "expo-location";
 import { Button } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { useParking } from "../contexts/auth/Parking";
 
 const DestinationSearch = ({ navigation }) => {
   //   const [originalPlace, setOriginalPlace] = useState(null);
   const [destinationPlace, setDestinationPlace] = useState(null);
+  const parking = useParking();
 
   useEffect(() => {
     if (destinationPlace) {
-      console.log(destinationPlace);
-      navigation.goBack()
+      parking.setLocation(destinationPlace);
+      navigation.goBack();
     }
   }, [destinationPlace]);
 
@@ -189,7 +191,5 @@ const styles = StyleSheet.create({
     left: 10,
   },
 });
-
-
 
 export default DestinationSearch;

@@ -6,12 +6,12 @@ export class Booking {
   }
 
   async createBooking(input) {
-    const { data } = await axios.post("/booking", input);
+    const { data } = await this.axios.post("/booking", input);
     return data;
   }
 
   async getBookingsByParking(parkingId) {
-    const { data } = await axios.get(`/booking/parking/${parkingId}`);
+    const { data } = await this.axios.get(`/booking/parking/${parkingId}`);
     return data;
   }
 }

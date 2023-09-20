@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CarCard from "../components/BookingScreen/CarCard";
 import ProfileCard from "../components/BookingScreen/ProfileCard";
 import NavFooter from "../components/General/NavFooter";
+import api from "../lib/api";
 
 const BookingScreen = ({ navigation }) => {
+  
   return (
     <View>
       <ScrollView
