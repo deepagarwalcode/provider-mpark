@@ -13,7 +13,8 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
-    setParkings(data);
+    setParkings(data.reverse());
+    console.log(data, "parkings");
     const books = await Promise.all(
       data.map((parking) => api.booking.getBookingsByParking(parking._id))
     );
@@ -39,13 +40,25 @@ const HomeScreen = ({ navigation }) => {
             {/* {bookings.map((booking) => {})} */}
             {/* <OngoingParkingCard navigation={navigation} />
             <OngoingParkingCard navigation={navigation} /> */}
-            {bookings.map((booking) => {
+            {bookings.map((booking, index) => {
               console.log(booking.length, "booking");
-              return booking?.map((book) => (
-                <OngoingParkingCard navigation={navigation} booking={book} />
-              ));
-            })}
+              const parking = parkings[index];
 
+              return (
+                <View>
+                  <Text style={{ fontWeight: "500", marginBottom: 15 }}>
+                    {parking?.name || "lol"}
+                  </Text>
+                  {booking?.reverse().map((book) => {
+                    return (book?.end > Date.now() && <OngoingParkingCard
+                      navigation={navigation}
+                      booking={book}
+                      key={book._id}
+                    />);
+                  })}
+                </View>
+              );
+            })}
           </View>
           <View style={styles.divider}></View>
           <View style={styles.ongoing_parkings}>

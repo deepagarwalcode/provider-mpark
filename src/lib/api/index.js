@@ -5,6 +5,7 @@ import { Auth } from "./auth";
 import { Booking } from "./booking";
 import { Parking } from "./parking";
 import { User } from "./user";
+import {Car } from "./car"
 
 class Api {
   _axios;
@@ -12,6 +13,7 @@ class Api {
   auth;
   parking;
   booking;
+  car;
 
   constructor() {
     this._axios = this.createAxios();
@@ -19,6 +21,7 @@ class Api {
     this.parking = new Parking(this._axios);
     this.booking = new Booking(this._axios);
     this.user = new User(this._axios);
+    this.car = new Car(this._axios);
   }
   createAxios() {
     const ax = axios.create();

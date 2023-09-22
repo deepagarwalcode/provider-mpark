@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import ProviderLocationScreen from "./ProviderLocationScreen";
 import api from "../lib/api";
 import { useParking } from "../contexts/auth/Parking";
+import * as DocumentPicker from "expo-document-picker";
 
 const AddParkingScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -20,19 +21,74 @@ const AddParkingScreen = ({ navigation }) => {
   const [coordinates, setCoordinates] = useState({});
   const [location, setLocation] = useState({});
 
-  const parking = useParking()
+  const parking = useParking();
 
   const createParking = async () => {
-    const data = {
-      name,
-      address,
-      hourlyRate: Number(hourlyRate),
-      coordinates: parking?.coordinates,
-      landmark: parking.location,
-    };
-    console.log(data)
-    const res = await api.parking.createParking(data);
-    console.log(res);
+    try {
+      const data = {
+        name,
+        address,
+        hourlyRate: Number(hourlyRate),
+        coordinates: parking?.coordinates,
+        landmark: parking.location,
+      };
+      const formData = new FormData();
+      formData.append("photo", doc);
+      formData.append("name", name);
+      formData.append("address", address);
+      formData.append("hourlyRate", Number(hourlyRate));
+      formData.append("coordinates", JSON.stringify(parking?.coordinates));
+      formData.append("landmark", JSON.stringify(parking?.location));
+      console.log(data);
+      const res = await api.parking.createParking(data);
+      console.log(res);
+      navigation.navigate("ProfileScreen");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [doc, setDoc] = useState();
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({
+      type: "*/*",
+      copyToCacheDirectory: true,
+    }).then((response) => {
+      console.log(response.assets[0]);
+      // if (response.type == "success") {
+      let { name, size, uri } = response.assets[0];
+      let nameParts = name.split(".");
+      let fileType = nameParts[nameParts.length - 1];
+      var fileToUpload = {
+        name: name,
+        size: size,
+        uri: uri,
+        type: "application/" + fileType,
+      };
+      console.log(fileToUpload, "...............file");
+      setDoc(fileToUpload);
+      // }
+    });
+    // console.log(result);
+    // console.log("Doc: " + doc.uri);
+  };
+
+  const postDocument = async () => {
+    const url = `${BASE_URL}/upload`;
+    const fileUri = doc.uri;
+    const formData = new FormData();
+    formData.append("document", doc);
+
+    console.log(formData);
+
+    const response = await axios.post(url, formData, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(response.data);
   };
 
   // const [map, setMap] = useState(false);
@@ -113,7 +169,36 @@ const AddParkingScreen = ({ navigation }) => {
             {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
           </TouchableOpacity>
         </View>
-        <Button onPress={createParking} title="Add Parking" />
+        <View style={styles.divider}></View>
+
+        <View style={styles.input_container}>
+          <Text style={styles.input_head}>Add Parking Picture</Text>
+          <TouchableOpacity onPress={pickDocument}>
+            <Text style={[styles.input, { paddingTop: 7 }]}>
+              Select Picture
+            </Text>
+            {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
+            {/* <TextInput style={styles.input} placeholder="Search Location" /> */}
+          </TouchableOpacity>
+        </View>
+        <View style={styles.divider}></View>
+
+        {/* <Button onPress={createParking} title="Add Parking" /> */}
+        <TouchableOpacity
+          onPress={createParking}
+          style={{
+            width: "85%",
+            backgroundColor: "teal",
+            paddingVertical: 7,
+            borderRadius: 3,
+          }}
+        >
+          <Text
+            style={{ color: "white", textAlign: "center", fontWeight: "600" }}
+          >
+            Add Parking
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

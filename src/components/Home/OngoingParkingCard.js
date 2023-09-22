@@ -1,15 +1,37 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CarCard from "./CarCard";
 import ProfileCard from "./ProfileCard";
 import { extractTimeString } from "../../lib/utils";
+import api from "../../lib/api";
 
-const OngoingParkingCard = ({navigation, booking}) => {
+const OngoingParkingCard = ({ navigation, booking }) => {
+  const [car, setCar] = useState(null);
+
+  const getCar = async () => {
+    console.log(booking?.car);
+    if (booking?.car) {
+      const res = await api.car.getCarById(booking?.car);
+      console.log(res);
+      setCar(res);
+    }
+  };
+
+  useEffect(() => {
+    getCar();
+  }, [booking]);
+
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("BookingScreen", booking)}>
-      <CarCard endTime={booking?.end} />
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate("BookingScreen", booking)}
+    >
+      <CarCard endTime={booking?.end} carDetails={car} />
       <View style={styles.line}></View>
-      <ProfileCard startTime={extractTimeString(booking?.start)} endTime={extractTimeString(booking?.end)} />
+      <ProfileCard
+        startTime={extractTimeString(booking?.start)}
+        endTime={extractTimeString(booking?.end)}
+      />
     </TouchableOpacity>
   );
 };
@@ -33,14 +55,14 @@ const styles = StyleSheet.create({
 
     elevation: 18,
     borderRadius: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   line: {
     backgroundColor: "whitesmoke",
     width: "95%",
     alignSelf: "center",
     height: 1,
-  }
+  },
 });
 
 export default OngoingParkingCard;

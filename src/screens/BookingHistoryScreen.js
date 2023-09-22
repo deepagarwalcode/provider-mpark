@@ -9,7 +9,7 @@ const BookingHistoryScreen = ({ navigation }) => {
   const [parkings, setParkings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  console.log( bookings, "boooooooooooosr");
+  console.log(bookings, "boooooooooooosr");
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
@@ -36,11 +36,29 @@ const BookingHistoryScreen = ({ navigation }) => {
           <View style={styles.divider}></View>
           <View style={styles.ongoing_parkings}>
             <Text style={styles.title}>Previous Parkings:</Text>
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
+            {bookings.map((booking, index) => {
+              console.log(booking.length, "booking");
+              const parking = parkings[index];
+
+              return (
+                <View>
+                  <Text style={{ fontWeight: "500", marginBottom: 15 }}>
+                    {parking?.name || "lol"}
+                  </Text>
+                  {booking?.reverse().map((book) => {
+                    return (
+                      book?.end < Date.now() && (
+                        <OngoingParkingCard
+                          navigation={navigation}
+                          booking={book}
+                          key={book._id}
+                        />
+                      )
+                    );
+                  })}
+                </View>
+              );
+            })}
           </View>
         </View>
       </ScrollView>

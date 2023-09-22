@@ -19,17 +19,17 @@ const CarCard = ({ carDetails, endTime }) => {
       <Image
         contentFit="cover"
         source={
-          carDetails?.image ||
+          carDetails?.carImg ||
           "https://gomechprod.blob.core.windows.net/gm-retail-app/New%20Car%20Model%20Images/brand-9-model-205.png"
         }
         style={{ width: 80, height: 40, borderRadius: 100 }}
       />
       <View>
         <Text style={{ fontWeight: "600", fontSize: 12 }}>
-          {carDetails?.name || "Maruti Suzuki Baleno"}
+          {carDetails?.company} {carDetails?.model || "Maruti Suzuki Baleno"}
         </Text>
         <Text style={{ fontWeight: "500", color: "gray", fontSize: 12 }}>
-          {carDetails?.number || "WB 24 6A 1567"}
+          {carDetails?.carNumber || "WB 24 6A 1567"}
         </Text>
       </View>
       <View style={{ marginLeft: "auto" }}>

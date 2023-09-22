@@ -19,12 +19,14 @@ import {
   extractTimeString,
 } from "../lib/utils";
 import { useRoute } from "@react-navigation/native";
-import { useAuth } from "../contexts/auth"; 
+import { useAuth } from "../contexts/auth";
 
 const BookingScreen = ({ navigation }) => {
   const route = useRoute();
   const booking = route.params;
   const [parking, setParking] = useState({});
+  const [car, setCar] = useState(null);
+
   const auth = useAuth();
 
   const getParking = async () => {
@@ -33,6 +35,15 @@ const BookingScreen = ({ navigation }) => {
       setParking(data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getCar = async () => {
+    console.log(booking?.car);
+    if (booking?.car) {
+      const res = await api.car.getCarById(booking?.car);
+      console.log(res);
+      setCar(res);
     }
   };
   // console.log(route.params)
@@ -48,6 +59,7 @@ const BookingScreen = ({ navigation }) => {
 
   useEffect(() => {
     getParking();
+    getCar();
   }, [booking]);
 
   return (
@@ -77,7 +89,7 @@ const BookingScreen = ({ navigation }) => {
 
           <View style={styles.user_info}>
             <Text style={styles.sub_header}>Vehicle Details</Text>
-            <CarCard />
+            <CarCard carDetails={car} />
           </View>
           <View style={styles.divider} />
           {/* <View style={styles.user_info}>
