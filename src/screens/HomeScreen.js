@@ -43,9 +43,8 @@ const HomeScreen = ({ navigation }) => {
             {bookings.map((booking, index) => {
               console.log(booking.length, "booking");
               const parking = parkings[index];
-
               return (
-                <View>
+                <View key={index}>
                   <Text style={{ fontWeight: "500", marginBottom: 15 }}>
                     {parking?.name || "lol"}
                   </Text>

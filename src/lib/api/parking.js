@@ -6,12 +6,7 @@ export class Parking {
   }
 
   async createParking(input) {
-    const { data } = await this.axios.post("/parking", input, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await this.axios.post("/parking", input);
     return data;
   }
 
