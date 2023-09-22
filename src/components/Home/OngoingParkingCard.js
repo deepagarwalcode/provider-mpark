@@ -2,14 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import CarCard from "./CarCard";
 import ProfileCard from "./ProfileCard";
+import { extractTimeString } from "../../lib/utils";
 
-const OngoingParkingCard = ({navigation}) => {
-  
+const OngoingParkingCard = ({navigation, booking}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("BookingScreen")}>
-      <CarCard />
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("BookingScreen", booking)}>
+      <CarCard endTime={booking?.end} />
       <View style={styles.line}></View>
-      <ProfileCard />
+      <ProfileCard startTime={extractTimeString(booking?.start)} endTime={extractTimeString(booking?.end)} />
     </TouchableOpacity>
   );
 };

@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
   const [parkings, setParkings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  console.log(parkings, bookings);
+  // console.log(bookings, "bookings");
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
@@ -36,15 +36,23 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.divider}></View>
           <View style={styles.ongoing_parkings}>
             <Text style={styles.title}>Ongoing Parkings:</Text>
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
+            {/* {bookings.map((booking) => {})} */}
+            {/* <OngoingParkingCard navigation={navigation} />
+            <OngoingParkingCard navigation={navigation} /> */}
+            {bookings.map((booking) => {
+              console.log(booking.length, "booking");
+              return booking?.map((book) => (
+                <OngoingParkingCard navigation={navigation} booking={book} />
+              ));
+            })}
+
           </View>
           <View style={styles.divider}></View>
           <View style={styles.ongoing_parkings}>
-            <Text style={styles.title}>Upcoming Parkings:</Text>
+            {/* <Text style={styles.title}>Upcoming Parkings:</Text> */}
+            {/* <OngoingParkingCard navigation={navigation} />
             <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
-            <OngoingParkingCard navigation={navigation} />
+            <OngoingParkingCard navigation={navigation} /> */}
           </View>
         </View>
       </ScrollView>

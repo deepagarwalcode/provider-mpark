@@ -22,6 +22,8 @@ const SignupScreen = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       await auth.signup({name, phoneNo});
+      navigation.navigate("Home");
+
     } catch (error) {
       console.log(error);
     }

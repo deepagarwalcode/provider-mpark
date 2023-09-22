@@ -14,17 +14,19 @@ import { useAuth } from "../contexts/auth";
 const LoginScreen = ({ navigation }) => {
   const auth = useAuth();
 
-  console.log(auth.isLoading, auth.user)
+  console.log(auth.isLoading, auth.user);
   const [phoneNo, setPhoneNo] = useState("");
 
   const handleSubmit = async () => {
+    console.log("first")
     try {
       await auth.login({ phoneNo });
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login to Mpark</Text>
@@ -40,7 +42,10 @@ const LoginScreen = ({ navigation }) => {
             color="black"
           />
         </View> */}
-        <TextInput onChangeText={(text) => setPhoneNo(text)} placeholder="Enter Mobile No." />
+        <TextInput
+          onChangeText={(text) => setPhoneNo(text)}
+          placeholder="Enter Mobile No."
+        />
       </View>
       <Text style={styles.label}>OTP</Text>
 

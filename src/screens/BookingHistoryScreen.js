@@ -9,7 +9,7 @@ const BookingHistoryScreen = ({ navigation }) => {
   const [parkings, setParkings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  console.log(parkings, bookings, "boooooooooooosr");
+  console.log( bookings, "boooooooooooosr");
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
