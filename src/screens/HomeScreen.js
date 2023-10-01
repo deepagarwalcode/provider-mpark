@@ -4,12 +4,21 @@ import { Ionicons } from "@expo/vector-icons";
 import OngoingParkingCard from "../components/Home/OngoingParkingCard";
 import NavFooter from "../components/General/NavFooter";
 import api from "../lib/api";
+import { useAuth } from "../contexts/auth";
 
 const HomeScreen = ({ navigation }) => {
   const [parkings, setParkings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
   // console.log(bookings, "bookings");
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if(auth && !auth?.user){
+      navigation.navigate("SignupScreen")
+    }
+  }, [auth])
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
@@ -23,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchParkings();
-  }, []);
+  }, [auth]);
   return (
     <View>
       <ScrollView style={{ height: "100%", backgroundColor: "white" }}>

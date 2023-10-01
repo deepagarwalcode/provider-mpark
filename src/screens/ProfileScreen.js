@@ -12,6 +12,8 @@ import api from "../lib/api";
 const ProfileScreen = ({ navigation }) => {
   const auth = useAuth();
   const [parkings, setParkings] = useState([]);
+  const [helpModal, setHelpModal] = useState(false);
+
 
   const fetchParkings = async () => {
     const data = await api.parking.getMyParkings();
@@ -24,6 +26,8 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      {helpModal && <HelpModal setHelpModal={setHelpModal} />}
+
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
