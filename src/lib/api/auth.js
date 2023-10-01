@@ -6,12 +6,12 @@ export class Auth {
   }
 
   async login(input) {
-    const { data } = await this.axios.post("/auth/login", input);
+    const { data } = await this.axios.post("/auth/login/provider", input);
     return data;
   }
 
   async signup(input) {
-    const { data } = await this.axios.post("/auth/signup", input);
+    const { data } = await this.axios.post("/auth/signup/provider", input);
     return data;
   }
 }

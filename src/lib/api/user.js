@@ -6,7 +6,7 @@ export class User {
   }
 
   async getMe() {
-    const { data } = await this.axios.get("/user/me");
+    const { data } = await this.axios.get("/provider/me");
     return data;
   }
 
