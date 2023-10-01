@@ -26,6 +26,7 @@ const BookingScreen = ({ navigation }) => {
   const booking = route.params;
   const [parking, setParking] = useState({});
   const [car, setCar] = useState(null);
+  const [user, setUser] = useState(null);
 
   const auth = useAuth();
 
@@ -46,6 +47,15 @@ const BookingScreen = ({ navigation }) => {
       setCar(res);
     }
   };
+
+  const getUser = async() => {
+    try {
+        const res = await api.user.getUserById(booking?.user);
+        setUser(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // console.log(route.params)
   const [time, setTime] = useState(0);
 
@@ -60,6 +70,7 @@ const BookingScreen = ({ navigation }) => {
   useEffect(() => {
     getParking();
     getCar();
+    getUser();
   }, [booking]);
 
   return (
@@ -83,7 +94,7 @@ const BookingScreen = ({ navigation }) => {
           <View style={styles.divider} />
           <View style={styles.user_info}>
             <Text style={styles.sub_header}>User Details</Text>
-            <ProfileCard />
+            <ProfileCard user={user} />
           </View>
           <View style={styles.divider} />
 

@@ -7,6 +7,7 @@ import api from "../../lib/api";
 
 const OngoingParkingCard = ({ navigation, booking }) => {
   const [car, setCar] = useState(null);
+  const [user, setUser] = useState(null);
 
   const getCar = async () => {
     console.log(booking?.car);
@@ -17,8 +18,18 @@ const OngoingParkingCard = ({ navigation, booking }) => {
     }
   };
 
+  const getUser = async() => {
+    try {
+        const res = await api.user.getUserById(booking?.user);
+        setUser(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getCar();
+    getUser();
   }, [booking]);
 
   return (
@@ -31,6 +42,7 @@ const OngoingParkingCard = ({ navigation, booking }) => {
       <ProfileCard
         startTime={extractTimeString(booking?.start)}
         endTime={extractTimeString(booking?.end)}
+        user={user}
       />
     </TouchableOpacity>
   );

@@ -10,23 +10,29 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 import { useRoute } from "@react-navigation/native";
 import api from "../lib/api";
+import { extractTimeString } from "../lib/utils";
 
 const ParkingSpaceScreen = ({ navigation }) => {
   const route = useRoute();
   const [parking, setParking] = useState(null);
-  const [bookings,setBookings] = useState([])
+  const [bookings, setBookings] = useState([]);
+  const [startTime, setStartTime] = useState(parking?.start || null);
+  const [endTime, setEndTime] = useState(parking?.end || null);
+
   const fetchParking = async () => {
     const parking = await api.parking.getParkingById(route.params.id);
     setParking(parking);
+    setStartTime(parking?.start);
+    setEndTime(parking?.end);
   };
-const fetchBookings = async () => {
+  const fetchBookings = async () => {
     const bookings = await api.booking.getBookingsByParking(route.params.id);
     setBookings(bookings);
   };
 
   useEffect(() => {
     fetchParking();
-    fetchBookings()
+    fetchBookings();
   }, []);
 
   const [date] = useState(new Date()); // Using current date
@@ -38,9 +44,6 @@ const fetchBookings = async () => {
     const initialFormattedDate = date.toLocaleDateString(undefined, options);
     setFormattedDate(initialFormattedDate);
   }, [date]);
-
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
 
   const showStartMode = (currentMode) => {
     DateTimePickerAndroid.open({
@@ -86,14 +89,6 @@ const fetchBookings = async () => {
 
   const showEndTimepicker = () => {
     showEndMode("time");
-  };
-
-  const extractTimeString = (timestamp) => {
-    if (timestamp == null) return null;
-    const date = new Date(timestamp);
-    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
-    const formattedTime = date.toLocaleTimeString([], options);
-    return formattedTime;
   };
 
   return (
@@ -201,8 +196,14 @@ const fetchBookings = async () => {
       </View> */}
         <View style={styles.previous_parkings}>
           <Text style={styles.ps_titles}>Previous Parkings</Text>
-          {bookings.reverse().map(booking => {
-            return <OngoingParkingCard navigation={navigation} booking={booking} />
+          {bookings.reverse().map((booking, index) => {
+            return (
+              <OngoingParkingCard
+                key={index}
+                navigation={navigation}
+                booking={booking}
+              />
+            );
           })}
         </View>
       </View>

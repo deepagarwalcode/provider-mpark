@@ -6,7 +6,7 @@ import {
   Touchable,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/auth";
@@ -28,6 +28,12 @@ const SignupScreen = ({ navigation }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if(auth?.user){
+      navigation.navigate("Home");
+    }
+  }, [auth]);
 
   return (
     <View style={styles.container}>
