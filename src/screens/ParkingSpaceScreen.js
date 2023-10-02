@@ -11,11 +11,14 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useRoute } from "@react-navigation/native";
 import api from "../lib/api";
 import { extractTimeString } from "../lib/utils";
+import AddSecurityModal from "../components/ParkingScreen/AddSecurityModal";
+import ProfileCard from "../components/Home/ProfileCard";
 
 const ParkingSpaceScreen = ({ navigation }) => {
   const route = useRoute();
   const [parking, setParking] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [security, setSecurity] = useState(null);
   const [startTime, setStartTime] = useState(parking?.start || null);
   const [endTime, setEndTime] = useState(parking?.end || null);
 
@@ -29,14 +32,24 @@ const ParkingSpaceScreen = ({ navigation }) => {
     const bookings = await api.booking.getBookingsByParking(route.params.id);
     setBookings(bookings);
   };
+  const fetchSecurity = async () => {
+    const security = await api.user.getSecurityById(parking?.security);
+    console.log("SECURTIY", security);
+    setSecurity(security);
+  };
 
   useEffect(() => {
     fetchParking();
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    fetchSecurity();
+  }, [parking, addSecurityModal]);
+
   const [date] = useState(new Date()); // Using current date
   const [formattedDate, setFormattedDate] = useState("");
+  const [addSecurityModal, setAddSecurityModal] = useState(false);
 
   useEffect(() => {
     // Format the date as "Month Date" initially
@@ -190,10 +203,51 @@ const ParkingSpaceScreen = ({ navigation }) => {
             />
           </View>
         </View>
-        {/* <View style={styles.previous_parkings}>
-        <Text style={styles.ps_titles}>Assign Security</Text>
-        <Button style={styles.button} title="+ Add Security" />
-      </View> */}
+        <View style={styles.previous_parkings}>
+          <Text style={styles.ps_titles}>Security</Text>
+          {parking?.security ? (
+            <View style={styles.security_card}>
+              <View
+                style={{
+                  width: 50,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  contentFit="cover"
+                  source={
+                    security?.image ||
+                    "https://images.unsplash.com/photo-1552234994-66ba234fd567?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
+                  }
+                  style={{ width: 40, height: 40, borderRadius: 100 }}
+                />
+              </View>
+              <View>
+                <Text style={{ fontWeight: "600", fontSize: 12 }}>
+                  {security?.name || "Deep lol"}
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setAddSecurityModal(true)}
+            >
+              <Text
+                style={{
+                  color: "black",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  paddingVertical: 7,
+                }}
+              >
+                Assign Security
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
         <View style={styles.previous_parkings}>
           <Text style={styles.ps_titles}>Previous Parkings</Text>
           {bookings.reverse().map((booking, index) => {
@@ -207,6 +261,12 @@ const ParkingSpaceScreen = ({ navigation }) => {
           })}
         </View>
       </View>
+      {addSecurityModal && (
+        <AddSecurityModal
+          setAddSecurityModal={setAddSecurityModal}
+          parkingId={parking?._id}
+        />
+      )}
     </ScrollView>
   );
 };
@@ -234,6 +294,8 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     gap: 10,
+    borderColor: "lightgray",
+    borderTopWidth: 5,
   },
   button: {
     backgroundColor: "white",
@@ -247,8 +309,6 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "space-between",
     overflow: "scroll",
-    borderColor: "lightgray",
-    borderBottomWidth: 5,
   },
   time_inputs: {
     flexDirection: "row",
@@ -272,6 +332,25 @@ const styles = StyleSheet.create({
   },
   ti_date: {
     color: "gray",
+  },
+  security_card: {
+    // width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    // backgroundColor: "red",
+    gap: 5,
+    //   paddingBottom: 5,
+    // justifyContent: "space-between",
+  },
+  icon: {
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: "whitesmoke",
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: "auto",
   },
 });
 

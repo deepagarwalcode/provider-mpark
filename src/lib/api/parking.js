@@ -26,4 +26,7 @@ export class Parking {
   async setAvailability(id, start, end) {
     await this.axios.post(`/parking/setAvailability/${id}`, { start, end });
   }
+  async addSecurityToParking(id, security){
+    await this.axios.post(`/parking/setSecurity/${id}`,{security})
+  }
 }

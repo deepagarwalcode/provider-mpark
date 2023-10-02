@@ -4,6 +4,7 @@ import { BASE_URL } from "../../config";
 import { Auth } from "./auth";
 import { Booking } from "./booking";
 import { Parking } from "./parking";
+import {Security} from "./security"
 import { User } from "./user";
 import {Car } from "./car"
 
@@ -14,6 +15,7 @@ class Api {
   parking;
   booking;
   car;
+  security;
 
   constructor() {
     this._axios = this.createAxios();
@@ -22,6 +24,7 @@ class Api {
     this.booking = new Booking(this._axios);
     this.user = new User(this._axios);
     this.car = new Car(this._axios);
+    this.security = new Security(this._axios)
   }
   createAxios() {
     const ax = axios.create();

@@ -14,4 +14,14 @@ export class User {
     const {data} = await this.axios.get(`/user/${id}`)
     return data
   }
+
+  async getSecurityById(id){
+    const {data} = await this.axios.get(`/security/${id}`)
+    return data
+  }
+
+  async getProviderById(id){
+    const {data} = await this.axios.get(`/provider/${id}`)
+    return data
+  }
 }
